@@ -1,0 +1,30 @@
+newmtl blinn13SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl lambert36SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd ROCK04L.JPG
+bump  -bm 1 -s_0.5_0.5_ ROCK04LB.JPG
+Ni 1.00
+newmtl lambert37SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd WOOD05L.JPG
+bump  -bm 1 WOOD05LB.JPG
+Ni 1.00
+newmtl lambert38SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd sign.jpg
+Ni 1.00
