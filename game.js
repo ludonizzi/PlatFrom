@@ -73,8 +73,8 @@ advancedTexture1.addControl(start);
 start.onPointerUpObservable.add(function () {       
     clicks ++;
     BABYLON.VirtualJoystick.Canvas.style.zIndex = "4"
-    camera.radius = 70;
-    camera.heightOffset = 50;  
+    camera.radius = 90;
+    camera.heightOffset = 70;  
     camera.rotationOffset = 180;                  
 });
 
@@ -97,7 +97,10 @@ var addRadio = function(text, parent, life1) {
     button.width = "20px";
     button.height = "20px";
     button.color = "red";
-    button.background = "black";     
+    button.background = "black"; 
+    if(text=="Easy"){
+        button.isChecked=true;
+    }
 
     button.onIsCheckedChangedObservable.add(function(state) {
         if (state) {
@@ -455,9 +458,9 @@ window.addEventListener("keyup", function (evt) {
             skeleton.bones[i].position = positionbones[i];
             skeleton.bones[i].rotation = rotationbones[i];
         }
-        player.rotation.y+=Math.PI;
         dudeanim.pause();
         animbool = false;
+        player.rotation.y+=Math.PI;
         
     }
 
@@ -1455,7 +1458,7 @@ scene.registerBeforeRender(function () {
 
     if ((map["w"] || map["W"])) {
         
-        body.translate(BABYLON.Axis.X, 1, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.X, 0.6, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkup = true;
         }
@@ -1506,7 +1509,7 @@ scene.registerBeforeRender(function () {
     };
 
     if ((map["s"] || map["S"])) {
-        body.translate(BABYLON.Axis.X, -1, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.X, -0.6, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkdown = true;
         }
@@ -1555,7 +1558,7 @@ scene.registerBeforeRender(function () {
     };
 
     if ((map["d"] || map["D"])) {
-        body.translate(BABYLON.Axis.Z, -1, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.Z, -0.6, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkright = true;
         }
@@ -1604,7 +1607,7 @@ scene.registerBeforeRender(function () {
     };
 
     if ((map["a"] || map["A"])) {
-        body.translate(BABYLON.Axis.Z, 1, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.Z, 0.6, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkleft = true;
         }
