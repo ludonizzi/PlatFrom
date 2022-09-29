@@ -201,7 +201,7 @@ scene.useGeometryIdsMap = true;
 scene.useMaterialMeshMap = true;
 scene.useClonedMeshMap = true;
 
-const options = new BABYLON.SceneOptimizerOptions();
+/* const options = new BABYLON.SceneOptimizerOptions();
 options.addOptimization(new BABYLON.HardwareScalingOptimization(0, 1.5));
 // Decalare an Optimizer
 var optimizer = new BABYLON.SceneOptimizer(scene, options);
@@ -212,7 +212,7 @@ scene.registerAfterRender(function(){
 if(engine.getFps()<60){
     optimizer.start();
 }
-});
+}); */
 
 
 
@@ -1673,7 +1673,7 @@ var victorymusic = new BABYLON.Sound("vicmusic", "./sounds/victory.mp3",scene, n
 //Camera
 var camera = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(-40, 10, 0), scene);
 camera.radius = 70;
-camera.heightOffset = 50;
+camera.heightOffset = 70;
 camera.rotationOffset = 180;
 camera.cameraAcceleration = 0.1;
 camera.maxCameraSpeed = 100;
@@ -1684,7 +1684,7 @@ camera.upperHeightOffsetLimit = 80;
 camera.lowerRotationOffsetLimit = 100;
 camera.upperRotationOffsetLimit = 240;
 //camera.minZ = 0;
-camera.maxZ = 270;
+camera.maxZ = 350;
 camera.attachControl(canvas, true);
 
         
