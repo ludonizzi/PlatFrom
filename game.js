@@ -140,10 +140,10 @@ BABYLON.SceneLoader.ImportMesh("", "./models/dude/", "dude.babylon", scene0, fun
             bool = true;
         }
         if(bool){
-            skeletons[0].bones[7].translate(new BABYLON.Vector3(0, 0, 0.2));
+            skeletons[0].bones[7].translate(new BABYLON.Vector3(0, 0, 0.15));
         } 
         else{
-            skeletons[0].bones[7].translate(new BABYLON.Vector3(0, 0, -0.2));
+            skeletons[0].bones[7].translate(new BABYLON.Vector3(0, 0, -0.15));
         } 
     });
 });
@@ -348,7 +348,6 @@ window.addEventListener("keydown", function (evt) {
         if (evt.keyCode == 32) {
             if(njump == 0){
                 dudeanim.pause();
-                animbool=false;
                 jump.play();
                 body.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 5000, 0), body.getAbsolutePosition());
                 njump++;
@@ -357,18 +356,22 @@ window.addEventListener("keydown", function (evt) {
         if(evt.keyCode == 87){
             player.rotation.y = Math.PI;
             wbool = true;
+            stickbool=false;
         }
         if(evt.keyCode == 68){
             player.rotation.y =  -Math.PI/2;
             dbool=true;
+            stickbool=false;
         }
         if(evt.keyCode == 65){
             player.rotation.y =  Math.PI/2;
             abool=true;
+            stickbool=false;
         }
         if(evt.keyCode == 83){
             player.rotation.y =  0;
             sbool=true;
+            stickbool=false;
         }
 
         if(evt.keyCode == 77){
@@ -386,7 +389,7 @@ window.addEventListener("keydown", function (evt) {
             }
         }
         if(evt.keyCode == 87 || evt.keyCode == 83 || evt.keyCode == 65 || evt.keyCode == 68){
-            if(animbool == false){
+            if(!animbool){
                 dudeanim.restart();
                 animbool=true;
             }
@@ -451,14 +454,11 @@ window.addEventListener("keyup", function (evt) {
         for(i=0; i<positionbones.length;i++){
             skeleton.bones[i].position = positionbones[i];
             skeleton.bones[i].rotation = rotationbones[i];
-            player.rotation.y = 0;
-            countwalk = 0;
-            lefthand = true;
-
-            dudeanim.pause();
-            animbool = false;
-            
         }
+        player.rotation.y+=Math.PI;
+        dudeanim.pause();
+        animbool = false;
+        
     }
 
 
@@ -558,7 +558,9 @@ var firebullet = function () {
             clicks ++;
         }
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
         
     });
@@ -575,10 +577,8 @@ var firebullet = function () {
 
 }
 
-
+animbool
 var damage = false;
-var countwalk=0;
-var lefthand = true; 
 var fight = false;
 var cameradone = true;
 var victory = false;
@@ -588,16 +588,52 @@ var done = true;
 
 //VIRTUAL JOYSTICK
 var leftJoystick = new BABYLON.VirtualJoystick(true);
+var rightJoystick = new BABYLON.VirtualJoystick(false);
 BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1"
+var stickbool = false;
+
+
+
+
 
 scene.onBeforeRenderObservable.add(()=>{
     if(leftJoystick.pressed){
-        moveX = leftJoystick.deltaPosition.x * (engine.getDeltaTime()/1000) * 40;
-        moveZ = leftJoystick.deltaPosition.y * (engine.getDeltaTime()/1000) * 40;
+        stickbool=true;
+        if(!animbool){
+            animbool=true;
+            dudeanim.restart();
+        }
+        moveX = leftJoystick.deltaPosition.x * (engine.getDeltaTime()/1000) * 30;
+        moveZ = leftJoystick.deltaPosition.y * (engine.getDeltaTime()/1000) * 30;
         body.position.z-=moveX;
         body.position.x+=moveZ;
+        player.rotation.y=Math.PI+Math.atan2(leftJoystick.deltaPosition.x,leftJoystick.deltaPosition.y);
         
     }
+    else{
+        if(stickbool){
+            if(animbool){
+                for(i=0; i<positionbones.length;i++){
+                    skeleton.bones[i].position = positionbones[i];
+                    skeleton.bones[i].rotation = rotationbones[i];                  
+                }
+                player.rotation.y += Math.PI;
+                dudeanim.pause();
+                animbool = false;
+            }
+        }
+
+    }
+
+     if(rightJoystick.pressed){
+        if(njump == 0){
+            dudeanim.pause();
+            jump.play();
+            body.physicsImpostor.applyImpulse(new BABYLON.Vector3(0, 5000, 0), body.getAbsolutePosition());
+            njump++;
+        }     
+
+    } 
 });
 
 
@@ -607,8 +643,10 @@ scene.registerBeforeRender(function () {
 
     body.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
-        animbool=true;
+        if(animbool){
+            dudeanim.restart();
+        }
+        animbool=false;
         
     });
 
@@ -696,14 +734,18 @@ scene.registerBeforeRender(function () {
             clicks ++;
         }
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
 
     
     body.physicsImpostor.registerOnPhysicsCollide(ground4.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
         
     });
@@ -711,81 +753,111 @@ scene.registerBeforeRender(function () {
 
     body.physicsImpostor.registerOnPhysicsCollide(boxbar.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
 
 
     body.physicsImpostor.registerOnPhysicsCollide(levelbord.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
 
     body.physicsImpostor.registerOnPhysicsCollide(levelbord2.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
 
     body.physicsImpostor.registerOnPhysicsCollide(carbox.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox2.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox3.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox4.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox5.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox6.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox7.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox8.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(carbox9.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(barrierlava.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(barrierlava2.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
     body.physicsImpostor.registerOnPhysicsCollide(bridge.physicsImpostor, function() {
         njump = 0;
-        dudeanim.restart();
+        if(animbool){
+            dudeanim.restart();
+        }
         animbool=true;
     });
 
@@ -1584,7 +1656,7 @@ scene.registerBeforeRender(function () {
 
 
 //music
-var music = new BABYLON.Sound("bg", "./sounds/bg.mp3", scene, null, { volume: 0.4, loop: true, autoplay: true });
+var music = new BABYLON.Sound("vg", "./sounds/vg.mp3", scene, null, { volume: 0.4, loop: true, autoplay: true });
 var jump = new BABYLON.Sound("jump", "sounds/jump.wav", scene, null, {volume: 1});
 var dogsound = new BABYLON.Sound("dogsound", "./sounds/dog.wav", scene, null, {volume: 0.7});
 var expsound = new BABYLON.Sound("expsound", "./sounds/explosion.mp3", scene , null, {volume: 0.7});
