@@ -21,4 +21,10 @@ button.primary { border-color: transparent; color: #070913; background: #62e6d2;
 .pill strong { color: #62e6d2; }
 .toast { position: absolute; left: 50%; bottom: 36px; translate: -50% 0; padding: 13px 18px; border-radius: 999px; background: rgba(8,11,25,.82); color: #d8def0; opacity: 0; transition: opacity .2s, translate .2s; }
 .toast.show { opacity: 1; translate: -50% -6px; }
+.mobile-controls { display: none; position: absolute; inset: auto 18px 18px; justify-content: space-between; align-items: end; }
+.mobile-controls button { pointer-events: auto; min-width: 0; width: 58px; height: 58px; padding: 0; border-radius: 18px; background: rgba(8,11,25,.72); backdrop-filter: blur(12px); touch-action: none; }
+.dpad { display: grid; grid-template-columns: repeat(3,58px); grid-template-rows: repeat(2,58px); gap: 5px; }
+.dpad button:nth-child(1) { grid-column: 2; } .dpad button:nth-child(2) { grid-column: 1; } .dpad button:nth-child(3) { grid-column: 2; } .dpad button:nth-child(4) { grid-column: 3; }
+.mobile-controls .jump { width: 76px; height: 76px; border-radius: 50%; color: #071019; background: #62e6d2; }
+@media (hover: none), (pointer: coarse) { .mobile-controls { display: flex; } .toast { bottom: 112px; } }
 @media (max-width: 650px) { .hud { padding: 12px; } .hud-group { flex-direction: column; } .pill { padding: 8px 11px; } }

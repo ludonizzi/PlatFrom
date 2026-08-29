@@ -6,6 +6,7 @@ import { DirectionalLight, HemisphericLight } from "@babylonjs/core/Lights";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { DefaultRenderingPipeline } from "@babylonjs/core/PostProcesses/RenderPipeline/Pipelines/defaultRenderingPipeline";
 import { Scene } from "@babylonjs/core/scene";
+import "@babylonjs/core/Collisions/collisionCoordinator";
 import type { Engine } from "@babylonjs/core/Engines/engine";
 import type { InputController } from "./InputController";
 import type { UI } from "./UI";

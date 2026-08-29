@@ -23,7 +23,8 @@ export class App {
     this.ui.menu(() => this.newRun());
     this.engine.runRenderLoop(() => {
       const dt = Math.min(this.engine.getDeltaTime() / 1000, 1 / 20);
-      if (this.state === "playing" && this.world) {
+      if (this.state === "menu" && (this.input.consume("Enter") || this.input.consume("Space"))) this.newRun();
+      else if (this.state === "playing" && this.world) {
         if (this.input.consume("Escape")) this.pause();
         else this.world.update(dt);
       } else if (this.state === "paused" && this.input.consume("Escape")) this.resume();
@@ -35,13 +36,14 @@ export class App {
     try {
       this.world?.dispose();
       this.world = new GameWorld(this.engine, this.canvas, this.input, this.ui, (won) => this.finish(won));
-      this.state = "playing"; this.ui.hud(); this.canvas.focus();
+      this.state = "playing"; this.showHud(); this.world.syncHud(); this.canvas.focus();
     } catch (error) {
       console.error("Unable to start the run", error);
       this.state = "menu";
     }
   }
   private pause(): void { if (this.state !== "playing") return; this.state = "paused"; this.ui.pause(() => this.resume(), () => this.newRun()); }
-  private resume(): void { this.state = "playing"; this.ui.hud(); this.world?.syncHud(); this.canvas.focus(); }
+  private resume(): void { this.state = "playing"; this.showHud(); this.world?.syncHud(); this.canvas.focus(); }
   private finish(won: boolean): void { this.state = "result"; this.ui.result(won, this.world?.elapsed ?? 0, () => this.newRun()); }
+  private showHud(): void { this.ui.hud((code, active) => this.input.virtualKey(code, active)); }
 }

@@ -8,10 +8,16 @@ export class UI {
     this.root.onclick = (event) => { if ((event.target as Element).closest("[data-start]")) onStart(); };
   }
 
-  hud(): void {
+  hud(onVirtualKey?: (code: string, active: boolean) => void): void {
     this.root.onclick = null;
     this.root.className = "hud";
-    this.root.innerHTML = `<div class="hud-group"><div class="pill">ENERGY <strong data-cores>0 / 0</strong></div><div class="pill">LIVES <strong data-lives>3</strong></div></div><div class="pill">TIME <strong data-time>00:00</strong></div><div class="toast" data-toast></div>`;
+    this.root.innerHTML = `<div class="hud-group"><div class="pill">ENERGY <strong data-cores>0 / 0</strong></div><div class="pill">LIVES <strong data-lives>3</strong></div></div><div class="pill">TIME <strong data-time>00:00</strong></div><div class="toast" data-toast></div><div class="mobile-controls" aria-label="Touch controls"><div class="dpad"><button data-key="KeyW">▲</button><button data-key="KeyA">◀</button><button data-key="KeyS">▼</button><button data-key="KeyD">▶</button></div><button class="jump" data-key="Space">JUMP</button></div>`;
+    if (onVirtualKey) for (const button of this.root.querySelectorAll<HTMLButtonElement>("[data-key]")) {
+      const code = button.dataset.key ?? "";
+      const set = (active: boolean) => onVirtualKey(code, active);
+      button.addEventListener("pointerdown", (event) => { event.preventDefault(); button.setPointerCapture(event.pointerId); set(true); });
+      button.addEventListener("pointerup", () => set(false)); button.addEventListener("pointercancel", () => set(false));
+    }
   }
 
   update(cores: number, total: number, lives: number, seconds: number): void {

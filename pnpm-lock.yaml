@@ -15,6 +15,9 @@ importers:
         specifier: ^8.0.0
         version: 8.56.2(@babylonjs/core@8.56.2)(babylonjs-gltf2interface@8.56.2)
     devDependencies:
+      '@openai/sites-vite-plugin':
+        specifier: ^0.2.0
+        version: 0.2.0(vite@7.3.6)
       typescript:
         specifier: ^5.7.0
         version: 5.9.3
@@ -195,6 +198,12 @@ packages:
     cpu: [x64]
     os: [linux]
     libc: [glibc]
+
+  '@openai/sites-vite-plugin@0.2.0':
+    resolution: {integrity: sha512-4ThLMW9eaf2gd+SqBwHmqBONKBAbQ2BuOFev7mHq7Y2W5mm/rfVJOSjcgQIsY2PqdXxXNZ4Yd0+s0DlSUYehag==}
+    engines: {node: '>=22.13.0'}
+    peerDependencies:
+      vite: ^8.0.0
 
   '@rollup/rollup-android-arm-eabi@4.63.1':
     resolution: {integrity: sha512-UZ8sUxPTiHWYX9QNdJedb1kDZSpS1t/VPWBWGSgqHNi9w3Cu6IXvu2mzbhiTiPvtrqgTQJ+zqiAq2iPIPilpaQ==}
@@ -522,6 +531,10 @@ snapshots:
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
+
+  '@openai/sites-vite-plugin@0.2.0(vite@7.3.6)':
+    dependencies:
+      vite: 7.3.6
 
   '@rollup/rollup-android-arm-eabi@4.63.1':
     optional: true

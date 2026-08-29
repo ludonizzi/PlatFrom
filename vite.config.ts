@@ -1,2 +1,3 @@
 import { defineConfig } from "vite";
-export default defineConfig({ base: "./", build: { target: "es2022", sourcemap: false } });
+import { sites } from "@openai/sites-vite-plugin";
+export default defineConfig({ plugins: [sites()], base: "./", build: { target: "es2022", sourcemap: false } });
