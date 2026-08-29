@@ -1,0 +1,2 @@
+import{b as r}from"./babylon-misc-BMDcfefZ.js";import"./babylon-buffers-C1-lUpDE.js";import"./babylon-meshes-mesh.vertexdata.js-Bztbn1U5.js";import"./babylon-maths-_luHdkvd.js";import"./babylon-culling-Hsf2B6XW.js";import"./babylon-loading-B7cDGLUY.js";import"./babylon-engines-C9MC1fFP.js";import"./babylon-meshes-mesh.js-B9atOcfg.js";`${r._DefaultCdnUrl}`,`${r._DefaultCdnUrl}`,`${r._DefaultCdnUrl}`;`${r._DefaultCdnUrl}`;`${r._DefaultCdnUrl}`,`${r._DefaultCdnUrl}`,`${r._DefaultCdnUrl}`;
+

@@ -1,0 +1,2 @@
+class t{constructor(e,s){this.distanceOrScreenCoverage=e,this.mesh=s}}export{t as M};
+
