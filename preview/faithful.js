@@ -321,6 +321,7 @@ var walldown = true;
 
 //mapping commands
 var map = {};
+var movementStep = 0.6;
 scene.actionManager = new BABYLON.ActionManager(scene);
 
 scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyDownTrigger, function (evt) {
@@ -1461,7 +1462,7 @@ scene.registerBeforeRender(function () {
 
     if ((map["w"] || map["W"])) {
         
-        body.translate(BABYLON.Axis.X, 0.6, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.X, movementStep, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkup = true;
         }
@@ -1512,7 +1513,7 @@ scene.registerBeforeRender(function () {
     };
 
     if ((map["s"] || map["S"])) {
-        body.translate(BABYLON.Axis.X, -0.6, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.X, -movementStep, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkdown = true;
         }
@@ -1561,7 +1562,7 @@ scene.registerBeforeRender(function () {
     };
 
     if ((map["d"] || map["D"])) {
-        body.translate(BABYLON.Axis.Z, -0.6, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.Z, -movementStep, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkright = true;
         }
@@ -1610,7 +1611,7 @@ scene.registerBeforeRender(function () {
     };
 
     if ((map["a"] || map["A"])) {
-        body.translate(BABYLON.Axis.Z, 0.6, BABYLON.Space.WORLD);
+        body.translate(BABYLON.Axis.Z, movementStep, BABYLON.Space.WORLD);
         if(!walkup && !walkright && !walkdown && !walkleft){
             walkleft = true;
         }
