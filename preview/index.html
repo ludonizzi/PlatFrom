@@ -19,14 +19,41 @@
     #loadingScreen:before{content:"PLATFROM";position:absolute;top:28%;letter-spacing:.42em;color:#ef3d45}
     #fps{position:fixed;z-index:30;top:max(12px,env(safe-area-inset-top));left:12px;min-width:72px;padding:7px 10px;border:1px solid #ffffff3d;border-radius:8px;background:#030407ad;color:#dfe7ef;font:600 12px ui-monospace,monospace}
     #help{position:fixed;z-index:30;right:12px;bottom:max(12px,env(safe-area-inset-bottom));padding:9px 12px;border-radius:9px;background:#030407a8;color:#cbd3dc;font-size:12px;pointer-events:none}
-    @media(max-width:700px){#help{display:none}}
+    #remasterHud{position:fixed;inset:0;z-index:25;display:none;pointer-events:none;text-transform:uppercase;letter-spacing:.12em}
+    #remasterHud.active{display:block}
+    #zoneName{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:800;text-shadow:0 2px 10px #000}
+    .track{position:absolute;left:50%;transform:translateX(-50%);overflow:hidden;background:#ffffff1c;border:1px solid #ffffff2b}
+    #progressTrack{top:42px;width:min(360px,48vw);height:4px}
+    #staminaTrack{left:20px;bottom:24px;transform:none;width:150px;height:6px;border-radius:9px}
+    .fill{width:100%;height:100%;transform-origin:left center;transition:transform .08s linear}
+    #progressFill{background:linear-gradient(90deg,#16c7ff,#d9f8ff);box-shadow:0 0 10px #16c7ff}
+    #staminaFill{background:linear-gradient(90deg,#ff7a18,#ffe09b);box-shadow:0 0 9px #ff7a18}
+    #staminaLabel{position:absolute;left:20px;bottom:38px;font-size:9px;color:#ffd49b}
+    #bossStatus{position:absolute;top:72px;left:50%;transform:translateX(-50%);display:none;padding:9px 14px;border:1px solid #ff393966;background:#170507cc;color:#ff7777;font:800 12px ui-monospace,monospace}
+    #bossStatus.visible{display:block}
+    #toast{position:absolute;left:50%;bottom:17%;transform:translate(-50%,20px);opacity:0;padding:12px 18px;border:1px solid #4bd8ff66;background:#06131ee8;color:#8de7ff;font:800 11px ui-monospace,monospace;transition:.3s ease}
+    #toast.show{transform:translate(-50%,0);opacity:1}
+    #damageFlash{position:fixed;inset:0;z-index:24;pointer-events:none;opacity:0;box-shadow:inset 0 0 140px 40px #ff0011}
+    #damageFlash.hit{animation:damage .55s ease-out}
+    @keyframes damage{0%{opacity:.75}100%{opacity:0}}
+    @media(max-width:700px){#help{display:none}#zoneName{top:56px}#progressTrack{top:78px;width:65vw}}
   </style>
 </head>
 <body>
   <div id="loadingScreen">Caricamento del mondo…</div>
   <canvas id="canvas" tabindex="0" aria-label="PlatFrom, gioco 3D"></canvas>
   <div id="fps">0 fps</div>
-  <div id="help">WASD muovi · SPAZIO salta · C camera · M musica</div>
+  <div id="help">WASD muovi · SHIFT corri · SPAZIO salta · C camera · R checkpoint · M musica</div>
+  <div id="damageFlash"></div>
+  <div id="remasterHud">
+    <div id="zoneName">Ingresso</div>
+    <div id="progressTrack" class="track"><div id="progressFill" class="fill"></div></div>
+    <div id="staminaLabel">Sprint</div>
+    <div id="staminaTrack" class="track"><div id="staminaFill" class="fill"></div></div>
+    <div id="bossStatus"></div>
+    <div id="toast"></div>
+  </div>
   <script src="./faithful.js"></script>
+  <script src="./remaster.js"></script>
 </body>
 </html>
