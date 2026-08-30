@@ -1664,7 +1664,7 @@ scene.registerBeforeRender(function () {
 
 //music
 var music = new BABYLON.Sound("vg", "../sounds/vg.mp3", scene, null, { volume: 0.4, loop: true, autoplay: true });
-var jump = new BABYLON.Sound("jump", "sounds/jump.wav", scene, null, {volume: 1});
+var jump = new BABYLON.Sound("jump", "../sounds/jump.wav", scene, null, {volume: 1});
 var dogsound = new BABYLON.Sound("dogsound", "../sounds/dog.wav", scene, null, {volume: 0.7});
 var expsound = new BABYLON.Sound("expsound", "../sounds/explosion.mp3", scene , null, {volume: 0.7});
 var scream = new BABYLON.Sound("screamsound", "../sounds/scream.mp3",scene, null, {volume: 0.3});
